@@ -3,3 +3,9 @@ dist
 .env
 .env.local
 *.log
+
+# Demo run-time files
+demo/logs/
+demo/pids.txt
+demo/demo_url.txt
+demo/cloudflared.exe

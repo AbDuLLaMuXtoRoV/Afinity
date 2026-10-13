@@ -3,8 +3,9 @@ import { getLang, t, tr } from './i18n.js';
 import { validateContact } from './validation.js';
 
 const CONTACT_EMAIL = 'hello@afinity.com';
-// Set VITE_CONTACT_ENDPOINT in .env to POST submissions as JSON to your backend.
-const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT;
+// Requests go to this site's /api/contact (forwarded to Telegram, see server/contact-api.js).
+// VITE_CONTACT_ENDPOINT in .env can point it at another backend.
+const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || '/api/contact';
 const VALIDATED_FIELDS = ['name', 'email', 'member', 'message'];
 const MEMBER_IDS = team.map((m) => m.id);
 const LANGUAGE_NAMES = { en: 'English', ru: 'Русский', uz: 'O‘zbekcha' };
@@ -144,27 +145,37 @@ export function presetMember(member) {
   }
 }
 
-async function send(payload) {
-  if (!ENDPOINT) {
-    // No backend configured yet: hand the message to the visitor's email client.
-    const subject = payload.memberName
-      ? `Project request for ${payload.memberName} from ${payload.name}`
-      : `New project request from ${payload.name}`;
-    const lines = [`Name: ${payload.name}`, `Email: ${payload.email}`];
-    if (payload.company) lines.push(`Company: ${payload.company}`);
-    if (payload.memberName) lines.push(`Requested team member: ${payload.memberName}`);
-    if (payload.services.length) lines.push(`Services: ${payload.services.join(', ')}`);
-    lines.push(`Language: ${LANGUAGE_NAMES[payload.language] ?? payload.language}`);
-    const body = [...lines, '', payload.message].join('\n');
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    return 'mailto';
-  }
+/** Opens the visitor's email app with the request filled in. */
+function openMailto(payload) {
+  const subject = payload.memberName
+    ? `Project request for ${payload.memberName} from ${payload.name}`
+    : `New project request from ${payload.name}`;
+  const lines = [`Name: ${payload.name}`, `Email: ${payload.email}`];
+  if (payload.company) lines.push(`Company: ${payload.company}`);
+  if (payload.memberName) lines.push(`Requested team member: ${payload.memberName}`);
+  if (payload.services.length) lines.push(`Services: ${payload.services.join(', ')}`);
+  lines.push(`Language: ${LANGUAGE_NAMES[payload.language] ?? payload.language}`);
+  const body = [...lines, '', payload.message].join('\n');
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  return 'sent';
+/**
+ * Sends the request to the server (which forwards it to Telegram).
+ * If that is not possible (no server, Telegram down, rate limit), the email app opens instead,
+ * so a request is never lost.
+ */
+async function send(payload) {
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (res.ok) return 'sent';
+  } catch {
+    /* network error or timeout: fall back below */
+  }
+  openMailto(payload);
+  return 'mailto';
 }

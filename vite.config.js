@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
+import { createContactHandler } from './server/contact-api.js';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const partialsDir = resolve(root, 'partials');
@@ -39,6 +40,34 @@ function htmlPartials() {
   };
 }
 
-export default defineConfig({
-  plugins: [htmlPartials()],
+/**
+ * Serves POST /api/contact (contact form -> Telegram) from the dev and preview servers.
+ * The token is read from .env here, on the server; only VITE_* variables ever reach the browser.
+ */
+function contactApi(mode) {
+  // Read on every request, so changing TELEGRAM_CHAT_ID in .env needs no restart
+  const getConfig = () => {
+    const env = loadEnv(mode, root, '');
+    return { token: env.TELEGRAM_BOT_TOKEN, chatId: env.TELEGRAM_CHAT_ID };
+  };
+  const handler = createContactHandler({ getConfig });
+  return {
+    name: 'contact-api',
+    configureServer(server) {
+      server.middlewares.use(handler);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(handler);
+    },
+  };
+}
+
+export default defineConfig(({ mode }) => {
+  return {
+    plugins: [htmlPartials(), contactApi(mode)],
+    // The demo is shared through a Cloudflare quick tunnel (see demo/start_demo.ps1)
+    preview: {
+      allowedHosts: ['.trycloudflare.com'],
+    },
+  };
 });

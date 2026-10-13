@@ -13,6 +13,35 @@ npm run build     # production build into dist/
 npm run preview   # serve the production build
 ```
 
+## Demo link (Cloudflare quick tunnel)
+
+Share the site from this computer with a temporary public link, the same way as the Bibo ERP demo:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\Users\abdul\afinity\demo\start_demo.ps1   # build, serve, print the link
+powershell -ExecutionPolicy Bypass -File C:\Users\abdul\afinity\demo\stop_demo.ps1    # stop
+```
+
+- The link (`https://….trycloudflare.com`) is printed and saved in `demo/demo_url.txt`. It changes every time the demo starts.
+- It works only while this computer is on and the demo is running. Logs are in `demo/logs/`.
+- Uses `cloudflared.exe` from `demo/`, `C:\Users\abdul\Projects\bibo-demo\`, or PATH. The site is served on port 8010.
+
+## Contact form → Telegram
+
+Requests from the contact form arrive as Telegram messages from **@afinitynotificationbot**
+(name, email, company, requested team member, services, language and the message).
+
+- The browser sends the form to `/api/contact` on this site (`server/contact-api.js`), which forwards it to Telegram.
+  The bot token is read from `.env` on the server and **never** reaches the browser or GitHub.
+- Settings live in `.env` (private, git-ignored): `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+- To choose who receives messages: open the bot in Telegram and press **Start** (or add it to a group and write
+  there), then run `npm run telegram:chat-id`. The change applies to the next request, no restart needed.
+- Use a **private** chat, group or channel: requests contain clients' personal details.
+- Protection: same validation as the form, spam honeypot, max 5 requests per visitor per 10 minutes, size limit.
+- If the server or Telegram is unavailable, the form opens the visitor's email app instead, so no request is lost.
+- The endpoint runs with `npm run dev`, `npm run preview` and the demo. Static-only hosting (e.g. GitHub Pages)
+  has no server, so there the form falls back to email unless `/api/contact` is hosted as a serverless function.
+
 ## Structure
 
 ```
