@@ -1,0 +1,201 @@
+// English: the source language. Every key used on the site must exist here;
+// other languages fall back to these strings when a key is missing.
+export default {
+  'meta.title': 'Afinity — Mobile Apps, Websites, Admin Panels & Infrastructure',
+  'meta.description':
+    'Afinity is an IT group that designs and builds iOS & Android apps, websites, admin panels and the data-centre infrastructure that keeps every request under control.',
+
+  // Navigation
+  'nav.skip': 'Skip to content',
+  'nav.services': 'Services',
+  'nav.team': 'Team',
+  'nav.portfolio': 'Portfolio',
+  'nav.process': 'Process',
+  'nav.infra': 'Infrastructure',
+  'nav.faq': 'FAQ',
+  'nav.contact': 'Contact',
+  'nav.cta': 'Start a project',
+  'nav.open': 'Open menu',
+  'nav.close': 'Close menu',
+  'lang.label': 'Language',
+
+  // Hero
+  'hero.eyebrow': 'IT group — Apps · Web · Infrastructure',
+  'hero.l1': 'We build the',
+  'hero.l2': 'digital <em>backbone</em>',
+  'hero.l3': 'of your business.',
+  'hero.lead':
+    'iOS & Android apps, websites, admin panels and the data-centre infrastructure that keeps every request answered — designed, engineered and run by one team.',
+  'hero.cta': 'Start a project',
+  'hero.work': 'See our work',
+  'hero.hintMouse': 'Move your cursor · click to scatter',
+  'hero.hintTouch': 'Tap the mark to scatter it',
+  'stats.projects': 'Projects delivered',
+  'stats.uptime': 'Uptime on managed infra',
+  'stats.requests': 'Requests routed daily',
+  'stats.monitoring': 'Monitoring',
+  'marquee.label': 'Technologies we work with',
+
+  // Services
+  'services.eyebrow': 'Services',
+  'services.title': 'Four disciplines.<br />One accountable team.',
+  'services.lead':
+    'From the app in your customer’s pocket to the server rack answering its requests — we own the whole chain, so nothing gets lost between vendors.',
+  'svc.mobile.title': 'iOS & Android apps',
+  'svc.mobile.text':
+    'Native and cross-platform apps that feel fast, look sharp and survive real-world traffic, from MVP to App Store & Google Play release.',
+  'svc.web.title': 'Websites',
+  'svc.web.text':
+    'Corporate sites, landing pages and e-commerce that load instantly, rank well and turn visitors into clients.',
+  'svc.admin.title': 'Admin panels',
+  'svc.admin.text':
+    'Dashboards and back-offices that give your team full control of users, orders, content and analytics, with role-based access.',
+  'svc.admin.tag1': 'Dashboards',
+  'svc.admin.tag2': 'Roles & access',
+  'svc.admin.tag3': 'Reports',
+  'svc.infra.title': 'Data centres & request control',
+  'svc.infra.text':
+    'Servers, load balancing, rate limiting and monitoring, so every request is routed, protected and answered, even at peak load.',
+  'svc.infra.tag1': 'Load balancing',
+  'svc.infra.tag2': '24/7 monitoring',
+
+  // Statement
+  'statement.eyebrow': 'Who we are',
+  'statement.text':
+    'We’re <mark>Afinity</mark>, an IT group of engineers and designers. We build the apps people use every day, the panels teams run their business on, and the <mark>infrastructure</mark> that keeps every request answered. One team. <mark>Zero</mark> hand-offs.',
+
+
+  // Team & portfolio
+  'team.eyebrow': 'Team',
+  'team.title': 'Know who builds it.<br />Work with them again.',
+  'team.lead':
+    'Every project has names behind it. Open a portfolio to see what each engineer has shipped, then request the same person for your next project.',
+  'team.available': 'Available',
+  'team.booked': 'Booked',
+  'team.seeProjects': 'See projects',
+  'credits.builtBy': 'Built by',
+  'credits.team': 'Team',
+
+  'portfolio.eyebrow': 'Portfolio',
+  'portfolio.title': 'Everything we’ve<br />shipped together.',
+  'portfolio.lead':
+    'Real products we’ve designed, built and run. Click any screen to see it full size, or filter by type of work.',
+  'pf.type': 'Type',
+  'pf.team': 'Team',
+  'pf.all': 'All',
+  'pf.everyone': 'Everyone',
+  'pf.filterType': 'Filter by type of work',
+  'pf.filterTeam': 'Filter by team member',
+  'pf.showing': 'Showing {shown} of {total} projects',
+  'pf.showAll': 'Show all {n} projects',
+  'pf.empty': 'No projects match these filters yet.',
+  'pf.reset': 'Reset filters',
+  'pf.by': 'Projects by {name}',
+  'pf.workWith': 'Work with {name}',
+  'pf.copy': 'Copy link',
+  'pf.copied': 'Link copied',
+  'pf.copyFail': 'Copy from the address bar',
+  'pf.clear': 'Show projects by everyone',
+  'feat.featured': 'Featured project',
+  'feat.openFull': 'open full size',
+  'feat.bringFront': 'bring to front',
+  'feat.screens': 'Screenshots',
+  'viewer.close': 'Close screenshot',
+  'cat.mobile': 'Mobile apps',
+  'cat.web': 'Websites',
+  'cat.admin': 'Admin panels',
+  'cat.infrastructure': 'Infrastructure',
+
+  // Process
+  'process.eyebrow': 'Process',
+  'process.title': 'From idea to launch,<br />without the chaos.',
+  'process.lead': 'A clear, repeatable path with weekly demos, so you always know where your project stands.',
+  'step1.time': '1–2 weeks',
+  'step1.title': 'Discover',
+  'step1.text': 'Workshops, goals, scope and technical architecture. You get a fixed plan and an honest estimate.',
+  'step2.time': '2–4 weeks',
+  'step2.title': 'Design',
+  'step2.text': 'User flows, UI design and clickable prototypes, tested before a single line of code is written.',
+  'step3.time': 'Sprints',
+  'step3.title': 'Build',
+  'step3.text': 'Agile development with code review, automated tests and a demo every week.',
+  'step4.time': 'Ongoing',
+  'step4.title': 'Launch & run',
+  'step4.text': 'Store releases, deployment, monitoring and support. We stay on after go-live.',
+
+  // Infrastructure
+  'infra.eyebrow': 'Infrastructure',
+  'infra.title': 'Your traffic,<br /><em>under control.</em>',
+  'infra.lead':
+    'We design, deploy and operate the data-centre side of your product, so a spike in users is a celebration, not an outage.',
+  'infra.check1': 'Load balancing & rate limiting',
+  'infra.check2': '24/7 monitoring & alerting',
+  'infra.check3': 'Automated backups & failover',
+  'infra.check4': 'Security hardening & DDoS protection',
+  'infra.console': 'Simulated live traffic dashboard',
+
+  // FAQ
+  'faq.eyebrow': 'FAQ',
+  'faq.title': 'Questions,<br />answered.',
+  'faq.q1': 'How long does it take to build an app or website?',
+  'faq.a1':
+    'A marketing website usually takes 3–6 weeks. A mobile app with an admin panel typically takes 2–5 months, depending on scope. After the Discover phase you get a detailed timeline.',
+  'faq.q2': 'Do you build both iOS and Android?',
+  'faq.a2':
+    'Yes. We build native apps (Swift, Kotlin) or cross-platform apps (Flutter, React Native) and handle publishing to the App Store and Google Play.',
+  'faq.q3': 'Can you take over an existing project?',
+  'faq.a3':
+    'Absolutely. We start with a code and infrastructure audit, fix what is critical, then continue development and support.',
+  'faq.q4': 'What does “request control” mean?',
+  'faq.a4':
+    'We set up and run the servers behind your product: load balancers, rate limits, caching, monitoring and failover, so traffic is distributed, abuse is blocked and your service stays fast.',
+  'faq.q5': 'Do you offer support after launch?',
+  'faq.a5':
+    'Yes. We offer monthly support plans covering monitoring, bug fixes, updates, new features and 24/7 incident response.',
+
+  // Contact & form
+  'contact.eyebrow': 'Contact',
+  'contact.title': 'Got an idea?<br />Let’s build it.',
+  'contact.lead': 'Tell us about your project. We reply within one business day with next steps.',
+  'contact.leadMember':
+    'Worked with {name} before? Tell us about your next project and we’ll put it straight on {name}’s desk. We reply within one business day.',
+  'contact.phone': 'Phone',
+  'contact.office': 'Office',
+  'contact.mapNote': 'Tashkent, Uzbekistan · Open in Yandex Maps',
+  'form.name': 'Your name',
+  'form.email': 'Email',
+  'form.company': 'Company',
+  'form.optional': '(optional)',
+  'form.member': 'Team member',
+  'form.noPref': 'No preference',
+  'form.need': 'What do you need?',
+  'form.chip.mobile': 'Mobile app',
+  'form.chip.website': 'Website',
+  'form.chip.admin': 'Admin panel',
+  'form.chip.infra': 'Infrastructure',
+  'form.message': 'About the project',
+  'form.submit': 'Send request',
+  'form.err.name': 'Please enter your name.',
+  'form.err.emailRequired': 'Please enter your email.',
+  'form.err.emailInvalid': 'That email address doesn’t look right.',
+  'form.err.messageShort': 'Tell us a bit more (at least {min} characters).',
+  'form.err.messageLong': 'Please keep it under {max} characters.',
+  'form.err.member': 'Please choose a team member from the list.',
+  'form.status.check': 'Please check the highlighted fields.',
+  'form.status.sending': 'Sending…',
+  'form.status.thanks': 'Thanks! We’ll get back to you within one business day.',
+  'form.status.mailto': 'Your email app should open with your message ready to send.',
+  'form.status.error': 'Something went wrong. Please email us directly at {email}.',
+
+  // Footer
+  'footer.blurb': 'Mobile apps, websites, admin panels and infrastructure, built and run by one team.',
+  'footer.navigate': 'Navigate',
+  'footer.services': 'Services',
+  'footer.connect': 'Connect',
+  'footer.svc.mobile': 'iOS & Android',
+  'footer.svc.web': 'Websites',
+  'footer.svc.admin': 'Admin panels',
+  'footer.svc.infra': 'Infrastructure',
+  'footer.rights': 'All rights reserved.',
+  'footer.toTop': 'Back to top',
+};

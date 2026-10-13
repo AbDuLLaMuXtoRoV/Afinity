@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Afinity — Mobile Apps, Websites, Admin Panels &amp; Infrastructure</title>
+    <meta
+      name="description"
+      content="Afinity is an IT group that designs and builds iOS & Android apps, websites, admin panels and the data-centre infrastructure that keeps every request under control."
+    />
+    <meta name="theme-color" content="#0A0E0B" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Afinity — We build the digital backbone of your business" />
+    <meta
+      property="og:description"
+      content="Mobile apps, websites, admin panels and infrastructure — designed, engineered and run by one team."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Afinity",
+        "description": "IT group building iOS & Android apps, websites, admin panels and data-centre infrastructure.",
+        "email": "hello@afinity.com",
+        "telephone": "+998935770488",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Parkent sialkovskiy ko’chasi",
+          "addressLocality": "Toshkent shahar, Yashnabod Tumani",
+          "addressCountry": "UZ"
+        },
+        "hasMap": "https://yandex.uz/maps/-/CTx~NAne"
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.replace('no-js', 'js');
+        try {
+          if (sessionStorage.getItem('afinity:intro') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+            d.classList.add('intro-seen');
+        } catch (e) {
+          d.classList.add('intro-seen');
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+
+  <body>
+    <!-- @include sprite.html -->
+
+    <!-- @include header.html -->
+
+    <!-- Intro: the mark draws itself, then a green panel wipes away (once per session) -->
+    <div class="preloader" aria-hidden="true">
+      <svg class="preloader__mark"><use href="#mark" /></svg>
+      <span class="preloader__count mono">000</span>
+    </div>
+
+    <main id="main">
+      <!-- ============ HERO ============ -->
+      <section class="hero" id="top" data-theme="dark">
+        <div class="hero__bg" aria-hidden="true"></div>
+
+        <div class="container hero__inner">
+          <div class="hero__copy">
+            <p class="eyebrow" data-reveal data-i18n="hero.eyebrow">IT group — Apps · Web · Infrastructure</p>
+
+            <h1 class="hero__title">
+              <span class="line"><span data-i18n-html="hero.l1">We build the</span></span>
+              <span class="line"><span data-i18n-html="hero.l2">digital <em>backbone</em></span></span>
+              <span class="line"><span data-i18n-html="hero.l3">of your business.</span></span>
+            </h1>
+
+            <p class="hero__lead" data-reveal style="--d: 0.25s" data-i18n="hero.lead">
+              iOS &amp; Android apps, websites, admin panels and the data-centre infrastructure that keeps every
+              request answered — designed, engineered and run by one team.
+            </p>
+
+            <div class="hero__actions" data-reveal style="--d: 0.35s">
+              <a class="btn btn--primary" href="#contact" data-magnetic>
+                <span data-i18n="hero.cta">Start a project</span>
+                <svg class="i"><use href="#arrow" /></svg>
+              </a>
+              <a class="btn btn--ghost" href="#portfolio">
+                <span data-i18n="hero.work">See our work</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero__visual" data-reveal style="--d: 0.2s">
+            <canvas class="hero__canvas" aria-hidden="true"></canvas>
+            <svg class="hero__static-mark" aria-hidden="true"><use href="#mark" /></svg>
+
+            <div class="float-tag float-tag--a mono" aria-hidden="true">GET /api/orders · 200 · 12ms</div>
+            <div class="float-tag float-tag--b mono" aria-hidden="true">iOS · Android · Web</div>
+            <div class="float-tag float-tag--c mono" aria-hidden="true">uptime 99.98%</div>
+
+            <p class="hero__hint mono" aria-hidden="true"><span class="hint-mouse" data-i18n="hero.hintMouse">Move your cursor · click to scatter</span><span class="hint-touch" data-i18n="hero.hintTouch">Tap the mark to scatter it</span></p>
+          </div>
+        </div>
+
+        <!-- TODO: replace these figures with Afinity's real numbers -->
+        <div class="container">
+          <dl class="stats">
+            <div class="stat" data-reveal>
+              <dt class="mono" data-i18n="stats.projects">Projects delivered</dt>
+              <dd><span data-count="120">120</span><sup>+</sup></dd>
+            </div>
+            <div class="stat" data-reveal style="--d: 0.08s">
+              <dt class="mono" data-i18n="stats.uptime">Uptime on managed infra</dt>
+              <dd><span data-count="99.98" data-decimals="2">99.98</span><sup>%</sup></dd>
+            </div>
+            <div class="stat" data-reveal style="--d: 0.16s">
+              <dt class="mono" data-i18n="stats.requests">Requests routed daily</dt>
+              <dd><span data-count="40">40</span><sup>M+</sup></dd>
+            </div>
+            <div class="stat" data-reveal style="--d: 0.24s">
+              <dt class="mono" data-i18n="stats.monitoring">Monitoring</dt>
+              <dd><span data-count="24">24</span><sup>/7</sup></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ============ STACK MARQUEE ============ -->
+      <div class="marquee" aria-label="Technologies we work with" data-i18n-attr="aria-label:marquee.label">
+        <div class="marquee__track">
+          <ul class="marquee__list">
+            <li>Swift</li><li>Kotlin</li><li>Flutter</li><li>React Native</li><li>React</li><li>Next.js</li>
+            <li>Vue</li><li>Node.js</li><li>Laravel</li><li>Go</li><li>PostgreSQL</li><li>Redis</li>
+            <li>Docker</li><li>Kubernetes</li><li>Nginx</li><li>Grafana</li>
+          </ul>
+          <ul class="marquee__list" aria-hidden="true">
+            <li>Swift</li><li>Kotlin</li><li>Flutter</li><li>React Native</li><li>React</li><li>Next.js</li>
+            <li>Vue</li><li>Node.js</li><li>Laravel</li><li>Go</li><li>PostgreSQL</li><li>Redis</li>
+            <li>Docker</li><li>Kubernetes</li><li>Nginx</li><li>Grafana</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ SERVICES ============ -->
+      <section class="section section--light" id="services">
+        <div class="container">
+          <header class="section-head">
+            <p class="eyebrow eyebrow--num" data-reveal><span>01</span> <span data-i18n="services.eyebrow">Services</span></p>
+            <h2 class="section-title" data-reveal data-i18n-html="services.title">Four disciplines.<br />One accountable team.</h2>
+            <p class="section-lead" data-reveal data-i18n="services.lead">
+              From the app in your customer's pocket to the server rack answering its requests — we own the whole
+              chain, so nothing gets lost between vendors.
+            </p>
+          </header>
+
+          <div class="bento">
+            <!-- Mobile -->
+            <article class="card card--mobile" data-reveal>
+              <div class="card__visual" aria-hidden="true">
+                <div class="phone phone--back">
+                  <div class="phone__screen">
+                    <div class="ui-bar"></div>
+                    <div class="ui-chart">
+                      <i style="--h: 40%"></i><i style="--h: 62%"></i><i style="--h: 48%"></i><i style="--h: 80%"></i>
+                      <i style="--h: 66%"></i><i style="--h: 92%"></i>
+                    </div>
+                    <div class="ui-row"></div>
+                    <div class="ui-row ui-row--short"></div>
+                  </div>
+                </div>
+                <div class="phone phone--front">
+                  <div class="phone__screen">
+                    <div class="phone__notch"></div>
+                    <div class="ui-toast"><i></i><span>New order <b>#2847</b></span></div>
+                    <div class="ui-hello"><b></b><i></i></div>
+                    <div class="ui-balance">
+                      <span>Total orders</span>
+                      <strong class="odo"><span>2,846<br />2,847</span></strong>
+                      <em>+18.4%</em>
+                    </div>
+                    <div class="ui-list">
+                      <div><i></i><b></b><s></s></div>
+                      <div><i></i><b></b><s></s></div>
+                      <div><i></i><b></b><s></s></div>
+                    </div>
+                    <div class="ui-tabbar"><i class="on"></i><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card__body">
+                <span class="card__num mono">01</span>
+                <h3 class="card__title" data-i18n="svc.mobile.title">iOS &amp; Android apps</h3>
+                <p data-i18n="svc.mobile.text">Native and cross-platform apps that feel fast, look sharp and survive real-world traffic, from MVP to App Store &amp; Google Play release.</p>
+                <ul class="tags"><li>Swift</li><li>Kotlin</li><li>Flutter</li><li>React Native</li></ul>
+              </div>
+            </article>
+
+            <!-- Web -->
+            <article class="card card--web" data-reveal style="--d: 0.08s">
+              <div class="card__visual" aria-hidden="true">
+                <div class="browser">
+                  <div class="browser__bar"><i></i><i></i><i></i><span class="mono">yourbrand.com</span></div>
+                  <div class="browser__body">
+                    <div class="sk sk--h"></div>
+                    <div class="sk sk--h sk--w60"></div>
+                    <div class="sk-cta">
+                      <div class="sk sk--btn"></div>
+                      <span class="sk-ripple"></span>
+                      <svg class="browser__cursor" viewBox="0 0 24 24"><path d="M4 2l16 9-7 2-3 7z" /></svg>
+                    </div>
+                    <div class="sk-grid"><div></div><div></div><div></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card__body">
+                <span class="card__num mono">02</span>
+                <h3 class="card__title" data-i18n="svc.web.title">Websites</h3>
+                <p data-i18n="svc.web.text">Corporate sites, landing pages and e-commerce that load instantly, rank well and turn visitors into clients.</p>
+                <ul class="tags"><li>Next.js</li><li>Vue</li><li>SEO</li><li>CMS</li></ul>
+              </div>
+            </article>
+
+            <!-- Admin -->
+            <article class="card card--admin" data-reveal>
+              <div class="card__visual" aria-hidden="true">
+                <div class="dash">
+                  <div class="dash__side"><b></b><i class="on"></i><i></i><i></i><i></i></div>
+                  <div class="dash__main">
+                    <div class="dash__kpis">
+                      <div><span>Revenue</span><strong>$84.2k</strong></div>
+                      <div><span>Users</span><strong>12,904</strong></div>
+                    </div>
+                    <div class="dash__bars">
+                      <i style="--h: 35%"></i><i style="--h: 58%"></i><i style="--h: 44%"></i><i style="--h: 70%"></i>
+                      <i style="--h: 52%"></i><i style="--h: 86%"></i><i style="--h: 64%"></i><i style="--h: 95%"></i>
+                      <span class="dash__tip mono">+24%</span>
+                    </div>
+                    <div class="dash__rows"><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card__body">
+                <span class="card__num mono">03</span>
+                <h3 class="card__title" data-i18n="svc.admin.title">Admin panels</h3>
+                <p data-i18n="svc.admin.text">Dashboards and back-offices that give your team full control of users, orders, content and analytics, with role-based access.</p>
+                <ul class="tags"><li data-i18n="svc.admin.tag1">Dashboards</li><li data-i18n="svc.admin.tag2">Roles &amp; access</li><li data-i18n="svc.admin.tag3">Reports</li></ul>
+              </div>
+            </article>
+
+            <!-- Infra -->
+            <article class="card card--infra" data-reveal style="--d: 0.08s">
+              <div class="card__visual" aria-hidden="true">
+                <div class="rack">
+                  <div class="rack__unit"><i></i><i></i><i></i><i></i><span></span></div>
+                  <div class="rack__unit"><i></i><i></i><i></i><i></i><span></span></div>
+                  <div class="rack__unit"><i></i><i></i><i></i><i></i><span></span></div>
+                </div>
+                <svg class="routes" viewBox="0 0 260 160" preserveAspectRatio="none">
+                  <g class="routes__base">
+                    <path d="M0 80 C 90 80, 120 22, 260 22" />
+                    <path d="M0 80 L 260 80" />
+                    <path d="M0 80 C 90 80, 120 138, 260 138" />
+                  </g>
+                  <g class="routes__pkt">
+                    <path pathLength="100" d="M0 80 C 90 80, 120 22, 260 22" />
+                    <path pathLength="100" d="M0 80 L 260 80" />
+                    <path pathLength="100" d="M0 80 C 90 80, 120 138, 260 138" />
+                  </g>
+                </svg>
+                <div class="nodes">
+                  <div class="mono">node-a<span>ok</span></div>
+                  <div class="mono">node-b<span>ok</span></div>
+                  <div class="mono">node-c<span>ok</span></div>
+                </div>
+              </div>
+              <div class="card__body">
+                <span class="card__num mono">04</span>
+                <h3 class="card__title" data-i18n="svc.infra.title">Data centres &amp; request control</h3>
+                <p data-i18n="svc.infra.text">Servers, load balancing, rate limiting and monitoring, so every request is routed, protected and answered, even at peak load.</p>
+                <ul class="tags"><li data-i18n="svc.infra.tag1">Load balancing</li><li>Kubernetes</li><li data-i18n="svc.infra.tag2">24/7 monitoring</li></ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ STATEMENT ============ -->
+      <section class="section section--dark statement" aria-label="About Afinity">
+        <div class="container">
+          <p class="eyebrow eyebrow--num" data-reveal><span>02</span> <span data-i18n="statement.eyebrow">Who we are</span></p>
+          <p class="statement__text" data-words data-i18n-html="statement.text">
+            We're <mark>Afinity</mark>, an IT group of engineers and designers. We build the apps people use every
+            day, the panels teams run their business on, and the <mark>infrastructure</mark> that keeps every
+            request answered. One team. <mark>Zero</mark> hand-offs.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ TEAM ============ -->
+      <section class="section section--dark team" id="team">
+        <div class="container">
+          <header class="section-head section-head--row">
+            <div>
+              <p class="eyebrow eyebrow--num" data-reveal><span>03</span> <span data-i18n="team.eyebrow">Team</span></p>
+              <h2 class="section-title" data-reveal data-i18n-html="team.title">Know who builds it.<br />Work with them again.</h2>
+            </div>
+            <p class="section-lead team__lead" data-reveal data-i18n="team.lead">
+              Every project has names behind it. Open a portfolio to see what each engineer has shipped, then
+              request the same person for your next project.
+            </p>
+          </header>
+          <!-- Rendered from src/data/team.js -->
+          <div class="team-grid" data-team-grid></div>
+        </div>
+      </section>
+
+      <!-- ============ PORTFOLIO ============ -->
+      <section class="section section--light portfolio" id="portfolio">
+        <div class="container">
+          <header class="section-head section-head--row">
+            <div>
+              <p class="eyebrow eyebrow--num" data-reveal><span>04</span> <span data-i18n="portfolio.eyebrow">Portfolio</span></p>
+              <h2 class="section-title" data-reveal data-i18n-html="portfolio.title">Everything we’ve<br />shipped together.</h2>
+            </div>
+            <p class="section-lead portfolio__lead" data-reveal data-i18n="portfolio.lead">
+              Filter by type of work or by team member to see exactly who built what, then request the same
+              people for your next project.
+            </p>
+          </header>
+          <!-- Rendered from src/data/team.js -->
+          <div data-portfolio></div>
+        </div>
+      </section>
+
+      <!-- ============ PROCESS ============ -->
+      <section class="section section--light" id="process">
+        <div class="container">
+          <header class="section-head">
+            <p class="eyebrow eyebrow--num" data-reveal><span>05</span> <span data-i18n="process.eyebrow">Process</span></p>
+            <h2 class="section-title" data-reveal data-i18n-html="process.title">From idea to launch,<br />without the chaos.</h2>
+            <p class="section-lead" data-reveal data-i18n="process.lead">
+              A clear, repeatable path with weekly demos, so you always know where your project stands.
+            </p>
+          </header>
+
+          <ol class="steps" data-steps>
+            <li class="step" data-reveal>
+              <span class="step__num">01</span>
+              <span class="step__time mono" data-i18n="step1.time">1–2 weeks</span>
+              <h3 data-i18n="step1.title">Discover</h3>
+              <p data-i18n="step1.text">Workshops, goals, scope and technical architecture. You get a fixed plan and an honest estimate.</p>
+            </li>
+            <li class="step" data-reveal style="--d: 0.08s">
+              <span class="step__num">02</span>
+              <span class="step__time mono" data-i18n="step2.time">2–4 weeks</span>
+              <h3 data-i18n="step2.title">Design</h3>
+              <p data-i18n="step2.text">User flows, UI design and clickable prototypes, tested before a single line of code is written.</p>
+            </li>
+            <li class="step" data-reveal style="--d: 0.16s">
+              <span class="step__num">03</span>
+              <span class="step__time mono" data-i18n="step3.time">Sprints</span>
+              <h3 data-i18n="step3.title">Build</h3>
+              <p data-i18n="step3.text">Agile development with code review, automated tests and a demo every week.</p>
+            </li>
+            <li class="step" data-reveal style="--d: 0.24s">
+              <span class="step__num">04</span>
+              <span class="step__time mono" data-i18n="step4.time">Ongoing</span>
+              <h3 data-i18n="step4.title">Launch &amp; run</h3>
+              <p data-i18n="step4.text">Store releases, deployment, monitoring and support. We stay on after go-live.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ INFRASTRUCTURE ============ -->
+      <section class="section section--dark infra" id="infrastructure">
+        <div class="container infra__inner">
+          <div class="infra__copy">
+            <p class="eyebrow eyebrow--num" data-reveal><span>06</span> <span data-i18n="infra.eyebrow">Infrastructure</span></p>
+            <h2 class="section-title" data-reveal data-i18n-html="infra.title">Your traffic,<br /><em>under control.</em></h2>
+            <p class="section-lead" data-reveal data-i18n="infra.lead">
+              We design, deploy and operate the data-centre side of your product, so a spike in users is a
+              celebration, not an outage.
+            </p>
+            <ul class="checks">
+              <li data-reveal><svg class="i"><use href="#check" /></svg><span data-i18n="infra.check1">Load balancing &amp; rate limiting</span></li>
+              <li data-reveal style="--d: 0.05s"><svg class="i"><use href="#check" /></svg><span data-i18n="infra.check2">24/7 monitoring &amp; alerting</span></li>
+              <li data-reveal style="--d: 0.1s"><svg class="i"><use href="#check" /></svg><span data-i18n="infra.check3">Automated backups &amp; failover</span></li>
+              <li data-reveal style="--d: 0.15s"><svg class="i"><use href="#check" /></svg><span data-i18n="infra.check4">Security hardening &amp; DDoS protection</span></li>
+            </ul>
+          </div>
+
+          <div class="console" data-console data-reveal style="--d: 0.1s" aria-label="Simulated live traffic dashboard" data-i18n-attr="aria-label:infra.console" role="img">
+            <div class="console__head">
+              <span class="console__title mono"><i></i>afinity / control-centre</span>
+              <span class="console__live mono">LIVE</span>
+            </div>
+            <div class="console__metrics">
+              <div><span class="mono">req/s</span><strong data-metric="rps">12,480</strong></div>
+              <div><span class="mono">p95 latency</span><strong data-metric="lat">38ms</strong></div>
+              <div><span class="mono">error rate</span><strong data-metric="err">0.02%</strong></div>
+              <div><span class="mono">nodes</span><strong>3/3</strong></div>
+            </div>
+            <div class="console__chart">
+              <svg viewBox="0 0 300 100" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="#5BB14E" stop-opacity=".35" />
+                    <stop offset="1" stop-color="#5BB14E" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path class="console__area" data-area d="" />
+                <path class="console__line" data-line d="" />
+              </svg>
+            </div>
+            <ul class="console__log mono" data-log></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ FAQ ============ -->
+      <section class="section section--light" id="faq">
+        <div class="container faq">
+          <header class="section-head">
+            <p class="eyebrow eyebrow--num" data-reveal><span>07</span> <span data-i18n="faq.eyebrow">FAQ</span></p>
+            <h2 class="section-title" data-reveal data-i18n-html="faq.title">Questions,<br />answered.</h2>
+          </header>
+          <div class="faq__list">
+            <details class="qa" data-reveal>
+              <summary><span data-i18n="faq.q1">How long does it take to build an app or website?</span><span class="qa__icon" aria-hidden="true"></span></summary>
+              <div class="qa__body"><p data-i18n="faq.a1">A marketing website usually takes 3–6 weeks. A mobile app with an admin panel typically takes 2–5 months, depending on scope. After the Discover phase you get a detailed timeline.</p></div>
+            </details>
+            <details class="qa" data-reveal>
+              <summary><span data-i18n="faq.q2">Do you build both iOS and Android?</span><span class="qa__icon" aria-hidden="true"></span></summary>
+              <div class="qa__body"><p data-i18n="faq.a2">Yes. We build native apps (Swift, Kotlin) or cross-platform apps (Flutter, React Native) and handle publishing to the App Store and Google Play.</p></div>
+            </details>
+            <details class="qa" data-reveal>
+              <summary><span data-i18n="faq.q3">Can you take over an existing project?</span><span class="qa__icon" aria-hidden="true"></span></summary>
+              <div class="qa__body"><p data-i18n="faq.a3">Absolutely. We start with a code and infrastructure audit, fix what is critical, then continue development and support.</p></div>
+            </details>
+            <details class="qa" data-reveal>
+              <summary><span data-i18n="faq.q4">What does "request control" mean?</span><span class="qa__icon" aria-hidden="true"></span></summary>
+              <div class="qa__body"><p data-i18n="faq.a4">We set up and run the servers behind your product: load balancers, rate limits, caching, monitoring and failover, so traffic is distributed, abuse is blocked and your service stays fast.</p></div>
+            </details>
+            <details class="qa" data-reveal>
+              <summary><span data-i18n="faq.q5">Do you offer support after launch?</span><span class="qa__icon" aria-hidden="true"></span></summary>
+              <div class="qa__body"><p data-i18n="faq.a5">Yes. We offer monthly support plans covering monitoring, bug fixes, updates, new features and 24/7 incident response.</p></div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- @include contact.html num=08 -->
+    </main>
+
+    <!-- @include footer.html -->
+  </body>
+</html>

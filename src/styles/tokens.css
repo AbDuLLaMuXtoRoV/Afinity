@@ -1,0 +1,51 @@
+:root {
+  /* Brand — sampled from the Afinity logo */
+  --green: #5bb14e;
+  --green-hi: #74c867;
+  --green-deep: #2f7a26; /* green for small text on light backgrounds (AA) */
+  --green-soft: rgba(91, 177, 78, 0.14);
+
+  /* Neutrals — green-tinted so every surface feels related to the logo */
+  --ink: #0a0e0b;
+  --ink-2: #101611;
+  --ink-3: #172019;
+  --ink-4: #222d24;
+  --paper: #f2f4ee;
+  --paper-2: #e7ebe2;
+  --white: #ffffff;
+
+  --text-on-dark: #ecf2e9;
+  --muted-on-dark: #96a392;
+  --line-on-dark: rgba(236, 242, 233, 0.1);
+  --text-on-light: #0a0e0b;
+  --muted-on-light: #545f50;
+  --line-on-light: rgba(10, 14, 11, 0.12);
+
+  --danger: #ff8a7c;
+  --warn: #e6c65c;
+
+  /* Type */
+  --font-display: 'Archivo', 'Arial Black', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Brand geometry */
+  --slant: -33.6deg; /* lean of the logo's diagonal stroke */
+  --cut: 14px; /* chamfered corner, echoing the cut on the logo's right leg */
+
+  /* Layout */
+  --max: 1320px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --section-y: clamp(88px, 12vw, 168px);
+  --nav-h: 76px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Contextual colors (dark by default) */
+  --fg: var(--text-on-dark);
+  --muted: var(--muted-on-dark);
+  --line: var(--line-on-dark);
+  --chip-bg: rgba(236, 242, 233, 0.07);
+}

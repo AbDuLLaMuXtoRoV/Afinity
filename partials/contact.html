@@ -1,0 +1,86 @@
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <svg class="contact__mark" aria-hidden="true"><use href="#mark" /></svg>
+  <div class="container contact__inner">
+    <header class="contact__head">
+      <p class="eyebrow eyebrow--num eyebrow--ink" data-reveal><span>{{num}}</span> <span data-i18n="contact.eyebrow">Contact</span></p>
+      <h2 class="contact__title" data-reveal data-i18n-html="contact.title">Got an idea?<br />Let’s build it.</h2>
+    </header>
+    <div class="contact__copy">
+      <p class="contact__lead" data-contact-lead data-reveal data-i18n="contact.lead">Tell us about your project. We reply within one business day with next steps.</p>
+      <a class="contact__email" href="mailto:hello@afinity.com" data-reveal>
+        hello@afinity.com <svg class="i"><use href="#arrow" /></svg>
+      </a>
+      <ul class="contact__details" data-reveal>
+        <li>
+          <span class="mono" data-i18n="contact.phone">Phone</span>
+          <a href="tel:+998935770488">+998 93 577 04 88</a>
+        </li>
+        <li>
+          <span class="mono" data-i18n="contact.office">Office</span>
+          <a href="https://yandex.uz/maps/-/CTx~NAne" target="_blank" rel="noopener noreferrer">Toshkent shahar, Yashnabod Tumani, Parkent sialkovskiy ko’chasi</a>
+          <small data-i18n="contact.mapNote">Tashkent, Uzbekistan · Open in Yandex Maps</small>
+        </li>
+      </ul>
+    </div>
+
+    <form class="form" data-form novalidate data-reveal style="--d: 0.1s">
+      <div class="form__row">
+        <div class="field">
+          <label for="f-name" data-i18n="form.name">Your name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required />
+          <p class="field__error" id="f-name-err"></p>
+        </div>
+        <div class="field">
+          <label for="f-email" data-i18n="form.email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required />
+          <p class="field__error" id="f-email-err"></p>
+        </div>
+      </div>
+
+      <div class="form__row">
+        <div class="field">
+          <label for="f-company"><span data-i18n="form.company">Company</span> <span class="opt" data-i18n="form.optional">(optional)</span></label>
+          <input id="f-company" name="company" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="f-member"><span data-i18n="form.member">Team member</span> <span class="opt" data-i18n="form.optional">(optional)</span></label>
+          <div class="select">
+            <select id="f-member" name="member">
+              <option value="" data-i18n="form.noPref">No preference</option>
+            </select>
+          </div>
+          <p class="field__error" id="f-member-err"></p>
+        </div>
+      </div>
+
+      <fieldset class="field">
+        <legend data-i18n="form.need">What do you need?</legend>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="services" value="mobile" /><span data-i18n="form.chip.mobile">Mobile app</span></label>
+          <label class="chip"><input type="checkbox" name="services" value="website" /><span data-i18n="form.chip.website">Website</span></label>
+          <label class="chip"><input type="checkbox" name="services" value="admin" /><span data-i18n="form.chip.admin">Admin panel</span></label>
+          <label class="chip"><input type="checkbox" name="services" value="infrastructure" /><span data-i18n="form.chip.infra">Infrastructure</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="f-message" data-i18n="form.message">About the project</label>
+        <textarea id="f-message" name="message" rows="4" required></textarea>
+        <p class="field__error" id="f-message-err"></p>
+      </div>
+
+      <!-- Honeypot: hidden from people, bots fill it -->
+      <div class="hp" aria-hidden="true">
+        <label for="f-website">Website</label>
+        <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button class="btn btn--light form__submit" type="submit">
+        <span data-i18n="form.submit">Send request</span>
+        <svg class="i"><use href="#arrow" /></svg>
+      </button>
+      <p class="form__status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
