@@ -1,8 +1,7 @@
 /*
   ============================================================================
   TEAM & PORTFOLIO: the single source of truth.
-  Only real projects go in `projects`. The team members marked SAMPLE are
-  placeholders; replace them with Afinity's real team.
+  Only real people and real projects go here.
 
   LANGUAGES: any text can be a plain string (same in every language) or
   { en, ru, uz }. Lists (features, results, highlights) can be { en: [...], ru: [...], uz: [...] }.
@@ -20,7 +19,7 @@
 
   `projects`: the shared portfolio. Featured first, then newest.
     title, year, client, summary, tags, results
-    team          ids of the people who worked on it, e.g. ['alex-carter', 'omar-saleh']
+    team          ids of the people who worked on it, e.g. ['ulugbek-xudoyqulov', 'abdulloh-muxtorov']
     category      'mobile' | 'web' | 'admin' | 'infrastructure'
     visual        { type, bg }: built-in mockup shown when there is no image
                   type: 'delivery' | 'booking' | 'shop' | 'network' | 'app' | 'dashboard'
@@ -56,45 +55,36 @@ const AVAILABLE = {
 };
 
 export const team = [
-  // SAMPLE
   {
-    id: 'alex-carter',
-    name: 'Alex Carter',
-    role: { en: 'Mobile lead · iOS & Android', ru: 'Ведущий мобильный разработчик · iOS и Android', uz: 'Mobil yo‘nalish rahbari · iOS va Android' },
-    photo: null,
+    id: 'ulugbek-xudoyqulov',
+    name: 'Ulug‘bek Xudoyqulov',
+    role: { en: 'Team lead · iOS & Android', ru: 'Руководитель команды · iOS и Android', uz: 'Jamoa rahbari · iOS va Android' },
+    photo: '/team/ulugbek-xudoyqulov.webp',
     available: true,
     availability: AVAILABLE,
-    skills: ['Swift', 'SwiftUI', 'Kotlin', 'Jetpack Compose', 'Flutter'],
+    skills: ['iOS', 'Android'],
   },
-  // SAMPLE
   {
-    id: 'lina-haddad',
-    name: 'Lina Haddad',
-    role: { en: 'Frontend & web lead', ru: 'Руководитель фронтенда и веба', uz: 'Frontend va veb rahbari' },
-    photo: null,
-    available: false,
-    availability: { en: 'Booked until January 2027', ru: 'Полная загрузка до января 2027', uz: '2027-yil yanvarigacha band' },
-    skills: ['TypeScript', 'React', 'Next.js', 'Vue', 'Accessibility'],
-  },
-  // SAMPLE
-  {
-    id: 'omar-saleh',
-    name: 'Omar Saleh',
-    role: { en: 'Backend & admin panels', ru: 'Бэкенд и админ-панели', uz: 'Backend va admin panellar' },
-    photo: null,
+    id: 'abdulloh-muxtorov',
+    name: 'Abdulloh Muxtorov',
+    role: { en: 'Admin panels & Telegram bots', ru: 'Админ-панели и Telegram-боты', uz: 'Admin panellar va Telegram botlar' },
+    photo: '/team/abdulloh-muxtorov.webp',
     available: true,
     availability: AVAILABLE,
-    skills: ['Node.js', 'Laravel', 'Go', 'PostgreSQL', 'Redis'],
+    skills: [
+      { en: 'Admin panels', ru: 'Админ-панели', uz: 'Admin panellar' },
+      { en: 'Telegram bots', ru: 'Telegram-боты', uz: 'Telegram botlar' },
+    ],
   },
-  // SAMPLE
   {
-    id: 'daniel-novak',
-    name: 'Daniel Novak',
-    role: { en: 'DevOps & infrastructure', ru: 'DevOps и инфраструктура', uz: 'DevOps va infratuzilma' },
-    photo: null,
+    id: 'temur-ibragimov',
+    name: 'Temur Ibragimov',
+    // TODO: real role and skills (not provided yet)
+    role: { en: 'Afinity team', ru: 'Команда Afinity', uz: 'Afinity jamoasi' },
+    photo: '/team/temur-ibragimov.webp',
     available: true,
     availability: AVAILABLE,
-    skills: ['Kubernetes', 'Docker', 'Nginx', 'Terraform', 'Grafana'],
+    skills: [],
   },
 ];
 

@@ -154,7 +154,8 @@ It appears automatically as a featured showcase at the top of the portfolio.
 ## Before launch: replace placeholders
 
 - [ ] Stats in the hero (`120+`, `99.98%`, `40M+`): marked with a `TODO` in `index.html`
-- [ ] Team members in `src/data/team.js` are **sample people**: replace them with the real team
+- [x] Real team in `src/data/team.js` (Ulug‘bek Xudoyqulov, Abdulloh Muxtorov, Temur Ibragimov)
+- [ ] Temur Ibragimov's role and skills (card shows "Afinity team" until then)
 - [ ] Email `hello@afinity.com`: in `partials/contact.html`, `partials/header.html`, `partials/footer.html` and `src/js/contact-form.js`
 - [ ] Social links in the footer (currently `#`)
 - [x] Phone `+998 93 577 04 88` and office address: in `partials/contact.html`, `partials/footer.html`, `partials/header.html` and the JSON-LD block in `index.html`

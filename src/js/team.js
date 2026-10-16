@@ -35,7 +35,7 @@ export function memberCard(member, index = 0) {
       <span class="member__info">
         <h3 class="member__name">${member.name}</h3>
         <span class="member__role mono">${tr(member.role)}</span>
-        <span class="tags member__skills">${member.skills.slice(0, 3).map((s) => html`<span>${s}</span>`)}</span>
+        <span class="tags member__skills">${member.skills.slice(0, 3).map((s) => html`<span>${tr(s)}</span>`)}</span>
         <span class="member__more">
           ${count
             ? html`${t('team.seeProjects')} <span class="mono">· ${count}</span>`
