@@ -1,9 +1,17 @@
-// POST /api/contact: validates a contact form request and forwards it to Telegram.
+// POST /api/contact: validates a contact form request, filters spam and forwards it to Telegram.
 // The bot token stays on the server (read from .env); it is never sent to the browser.
 import { findMember, team } from '../src/data/team.js';
 import { validateContact } from '../src/js/validation.js';
+import { spamReasons } from './spam-check.js';
+import { createSpamGuard, MAX_STRIKES } from './spam-guard.js';
 
-const SERVICE_NAMES = { mobile: 'Mobile app', website: 'Website', admin: 'Admin panel', infrastructure: 'Infrastructure' };
+const SERVICE_NAMES = {
+  mobile: 'Mobile app',
+  website: 'Website',
+  admin: 'Admin panel',
+  bot: 'Telegram bot',
+  infrastructure: 'Infrastructure',
+};
 const LANGUAGE_NAMES = { en: 'English', ru: 'Русский', uz: 'O‘zbekcha' };
 const MEMBER_IDS = team.map((m) => m.id);
 const MAX_BODY_BYTES = 16 * 1024;
@@ -15,7 +23,10 @@ const escapeHtml = (value) =>
 
 const clean = (value, max = 200) => String(value ?? '').trim().slice(0, max);
 
-/** Builds the Telegram message (HTML parse mode). Exported for tests. */
+const tashkentTime = (date) =>
+  date.toLocaleString('ru-RU', { timeZone: 'Asia/Tashkent', dateStyle: 'short', timeStyle: 'short' });
+
+/** Builds the Telegram message for a request (HTML parse mode). Exported for tests. */
 export function formatMessage(data, { now = new Date() } = {}) {
   const member = findMember(data.member);
   const services = (Array.isArray(data.services) ? data.services : [])
@@ -23,7 +34,6 @@ export function formatMessage(data, { now = new Date() } = {}) {
     .filter(Boolean);
   let message = clean(data.message, 5000);
   if (message.length > MAX_MESSAGE_CHARS) message = `${message.slice(0, MAX_MESSAGE_CHARS)}…`;
-  const time = now.toLocaleString('ru-RU', { timeZone: 'Asia/Tashkent', dateStyle: 'short', timeStyle: 'short' });
 
   const row = (label, value) => (value ? `<b>${label}:</b> ${escapeHtml(value)}` : null);
   return [
@@ -39,10 +49,25 @@ export function formatMessage(data, { now = new Date() } = {}) {
     '<b>💬 Message:</b>',
     escapeHtml(message),
     '',
-    `<i>🕒 ${escapeHtml(time)} (Tashkent)</i>`,
+    `<i>🕒 ${escapeHtml(tashkentTime(now))} (Tashkent)</i>`,
   ]
     .filter((line) => line !== null)
     .join('\n');
+}
+
+/** Builds the alert sent when an IP gets blocked. Exported for tests. */
+export function formatBlockAlert(ip, entry) {
+  const until = entry.until ? `${tashkentTime(new Date(entry.until))} (Tashkent)` : 'permanently';
+  return [
+    '<b>🚫 Spammer blocked</b>',
+    '',
+    `<b>IP:</b> <code>${escapeHtml(ip)}</code>`,
+    `<b>Blocked until:</b> ${escapeHtml(until)}`,
+    `<b>Why:</b> ${MAX_STRIKES} junk requests: ${escapeHtml(entry.reasons.join(', '))}`,
+    ...(entry.samples.length ? ['', '<b>Last messages:</b>', ...entry.samples.map((s) => `• ${escapeHtml(s.slice(0, 120))}`)] : []),
+    '',
+    `If this was a real client, unblock: <code>npm run spam -- unblock ${escapeHtml(ip)}</code>`,
+  ].join('\n');
 }
 
 function sendJson(res, status, body) {
@@ -70,23 +95,61 @@ function readBody(req) {
   });
 }
 
-function clientIp(req) {
-  return (
-    req.headers['cf-connecting-ip'] ||
-    String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
-    req.socket?.remoteAddress ||
-    'unknown'
-  );
+/**
+ * The visitor's IP. Forwarding headers are trusted only when the request comes from this
+ * machine (the Cloudflare tunnel connects locally); otherwise anyone could fake a header
+ * to dodge a block or to get someone else blocked.
+ */
+export function clientIp(req) {
+  const remote = String(req.socket?.remoteAddress ?? '');
+  const viaLocalProxy = /^(::1|127\.|::ffff:127\.)/.test(remote);
+  if (viaLocalProxy) {
+    const forwarded = req.headers['cf-connecting-ip'] || String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+    if (forwarded) return forwarded;
+  }
+  return remote || 'unknown';
+}
+
+async function sendTelegram({ token, chatId }, text, fetchImpl) {
+  return fetchImpl(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true }),
+    signal: AbortSignal.timeout(10_000),
+  });
 }
 
 /**
  * Connect-style middleware (works in Vite dev and preview servers).
  * Pass `token`/`chatId`, or `getConfig()` to read them fresh on every request (so .env changes apply without a restart).
  * @param {{ token?: string, chatId?: string, getConfig?: () => { token?: string, chatId?: string },
+ *           blocklistFile?: string, blockDays?: number,
  *           fetchImpl?: typeof fetch, log?: Pick<Console, 'error'> }} options
+ *   blocklistFile: where blocked IPs are stored (no file = blocks are not saved); blockDays: 0 = permanent
  */
-export function createContactHandler({ token, chatId, getConfig, fetchImpl = fetch, log = console } = {}) {
+export function createContactHandler({
+  token,
+  chatId,
+  getConfig,
+  blocklistFile,
+  blockDays = 7,
+  fetchImpl = fetch,
+  log = console,
+} = {}) {
+  const config = () => (getConfig ? getConfig() : { token, chatId });
   const hits = new Map(); // ip -> timestamps of recent requests
+
+  const guard = createSpamGuard({
+    file: blocklistFile ?? '',
+    blockDays,
+    onBlock: (ip, entry) => {
+      const cfg = config();
+      if (!cfg.token || !cfg.chatId) return;
+      sendTelegram(cfg, formatBlockAlert(ip, entry), fetchImpl).catch((err) =>
+        log.error(`[contact] block alert failed: ${err.message}`),
+      );
+    },
+  });
 
   const rateLimited = (ip) => {
     const now = Date.now();
@@ -100,9 +163,13 @@ export function createContactHandler({ token, chatId, getConfig, fetchImpl = fet
   return async function contactHandler(req, res, next) {
     if ((req.url ?? '').split('?')[0] !== '/api/contact') return next();
     if (req.method !== 'POST') return sendJson(res, 405, { ok: false, error: 'method_not_allowed' });
-    const config = getConfig ? getConfig() : { token, chatId };
-    if (!config.token || !config.chatId) return sendJson(res, 503, { ok: false, error: 'not_configured' });
-    if (rateLimited(clientIp(req))) return sendJson(res, 429, { ok: false, error: 'too_many_requests' });
+
+    const ip = clientIp(req);
+    if (blocklistFile && guard.isBlocked(ip)) return sendJson(res, 403, { ok: false, error: 'blocked' });
+
+    const cfg = config();
+    if (!cfg.token || !cfg.chatId) return sendJson(res, 503, { ok: false, error: 'not_configured' });
+    if (rateLimited(ip)) return sendJson(res, 429, { ok: false, error: 'too_many_requests' });
 
     let data;
     try {
@@ -112,24 +179,30 @@ export function createContactHandler({ token, chatId, getConfig, fetchImpl = fet
       return sendJson(res, err.status ?? 400, { ok: false, error: err.status ? 'too_large' : 'bad_request' });
     }
 
-    // Bots fill the hidden "website" field: accept silently, send nothing
-    if (clean(data.website)) return sendJson(res, 200, { ok: true });
+    // Junk counts as a strike; MAX_STRIKES strikes block the IP
+    const strike = (reasons) => blocklistFile && guard.strike(ip, reasons, clean(data.message, 200));
 
+    // Bots fill the hidden "website" field: pretend success, send nothing
+    if (clean(data.website)) {
+      strike(['bot-honeypot']);
+      return sendJson(res, 200, { ok: true });
+    }
+
+    // The form already checks these fields, so an invalid request here bypassed it
     const { valid, errors } = validateContact(data, { memberIds: MEMBER_IDS });
-    if (!valid) return sendJson(res, 422, { ok: false, error: 'invalid', fields: Object.keys(errors) });
+    if (!valid) {
+      strike(['invalid']);
+      return sendJson(res, 422, { ok: false, error: 'invalid', fields: Object.keys(errors) });
+    }
+
+    const reasons = spamReasons(data);
+    if (reasons.length) {
+      const blocked = strike(reasons);
+      return sendJson(res, blocked ? 403 : 422, { ok: false, error: blocked ? 'blocked' : 'spam' });
+    }
 
     try {
-      const tg = await fetchImpl(`https://api.telegram.org/bot${config.token}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: config.chatId,
-          text: formatMessage(data),
-          parse_mode: 'HTML',
-          disable_web_page_preview: true,
-        }),
-        signal: AbortSignal.timeout(10_000),
-      });
+      const tg = await sendTelegram(cfg, formatMessage(data), fetchImpl);
       if (!tg.ok) {
         const detail = await tg.text().catch(() => '');
         log.error(`[contact] Telegram responded ${tg.status}: ${detail.slice(0, 200)}`);

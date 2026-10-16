@@ -38,6 +38,26 @@ Requests from the contact form arrive as Telegram messages from **@afinitynotifi
   there), then run `npm run telegram:chat-id`. The change applies to the next request, no restart needed.
 - Use a **private** chat, group or channel: requests contain clients' personal details.
 - Protection: same validation as the form, spam honeypot, max 5 requests per visitor per 10 minutes, size limit.
+
+### Spam protection and IP blocking
+
+- `server/spam-check.js` recognises junk in English, Russian and Uzbek: random letters, keyboard mashing,
+  repeated characters or words, messages too short to mean anything, link spam, spam words, and forms sent
+  in under 2 seconds (bots). Junk never reaches Telegram; the visitor is asked to describe the project.
+- Every junk, invalid or bot request is a strike. **5 strikes within 24 hours block the IP** for
+  `SPAM_BLOCK_DAYS` days (default 7, `0` = permanently). Blocked IPs see "sending is not available, please call us".
+- When an IP is blocked, the Telegram channel gets an alert with the IP, the reason, the last messages and the
+  unblock command.
+- Blocks are stored in `data/blocklist.json` (git-ignored, IPs are personal data) and survive restarts.
+- Manage blocks (changes apply immediately, no restart):
+  ```bash
+  npm run spam -- list
+  npm run spam -- unblock <ip>
+  npm run spam -- block <ip> [days]
+  ```
+- Mobile operators in Uzbekistan often share one IP between many customers, so keep blocks short.
+- IP headers are trusted only for requests arriving through the local Cloudflare tunnel, so a visitor cannot
+  fake their IP to dodge a block or get someone else blocked.
 - If the server or Telegram is unavailable, the form opens the visitor's email app instead, so no request is lost.
 - The endpoint runs with `npm run dev`, `npm run preview` and the demo. Static-only hosting (e.g. GitHub Pages)
   has no server, so there the form falls back to email unless `/api/contact` is hosted as a serverless function.
@@ -106,42 +126,101 @@ Everything comes from `src/data/team.js` (fields are documented at the top of th
 - `team`: the people in the **Team** section and in the contact form's **Team member** list
 - `projects`: the shared **Portfolio**. Each project lists the people who built it in `team: [...]`.
 
-How a returning client finds the same person again:
+Team cards open the contact form with that person pre-selected. Once projects list who built them
+(`team: [...]`), a person's card opens `/projects.html?member=<id>` instead, and their name appears on
+those project pages. The request (email, or the `VITE_CONTACT_ENDPOINT` payload) includes `member` and `memberName`.
 
-1. Click the person in **Team**, or their name on any project or under a case study. The portfolio filters to that person's projects.
-2. The bar above the projects offers **Work with <name>**, which opens the contact form with that person pre-selected, and **Copy link** to save that filtered view.
+Shareable links: `/projects.html?type=mobile`, `/projects.html?member=<id>` (projects credited to one person), and `/?with=<id>#contact` (pre-selects the person in the form). Old `/#portfolio` links redirect to the projects page.
 
-The request (email, or the `VITE_CONTACT_ENDPOINT` payload) includes `member` and `memberName`.
+Photos: put images in `public/team/` and set `photo: '/team/name.jpg'`.
 
-Shareable links: `/?member=<id>#portfolio`, `/?type=mobile#portfolio`, and `/?with=<id>#contact` (pre-selects the person in the form).
-
-Photos: put images in `public/team/` and set `photo: '/team/name.jpg'`. Project screenshots work the same way with `image`.
-
-### Featured project: Bibo ERP
-
-Bibo ERP is the first card in the portfolio: a 3D stack of screenshots (click a back screen or a tab to bring
-it forward, click the front one to open it full size; it rotates by itself while on screen), floating key
-figures, and the project details. Files live in `public/portfolio/bibo/`:
-`dashboard.webp`, `finance.webp`, `occupancy.webp` and `logo.svg`. Screenshots look best at about 1900×960.
-To change them, replace the files or edit `images` and `highlights` for the project in `src/data/team.js`.
-
-### Featured project: IRIZON BONUS
-
-Second featured card: the admin panel as a 3D stack plus a fan of four app screenshots (`phones`), and
-Google Play / App Store buttons (`links`). Files live in `public/portfolio/irizon/`. Only public product
-information is used; server, deployment and configuration details from the project document are left out on purpose.
-
-### Featured project: Elchi
-
-Third featured card, same layout as IRIZON: four admin screens in the 3D stack (three visible, the fourth
-rotates in) and a fan of four app screens. Files live in `public/portfolio/elchi/`, including `logo.png`.
-Competitors are described by type, not named.
+Project files live in `public/portfolio/<project>/` (`bibo`, `irizon`, `elchi`): desktop screenshots (about
+1900×960) in `images`, portrait app screenshots in `phones`, optional `logo`, store `links` and key figures
+in `highlights`. For IRIZON only public product information is used; server, deployment and configuration
+details from the project document are left out on purpose. Elchi's competitors are described by type, not named.
 
 ### Adding the next real project
 
-Copy one of the featured entries in `src/data/team.js`, put its screenshots in `public/portfolio/<name>/`
-(desktop screens ~1900×960, phone screens portrait), fill in the text in all three languages and set `team`.
-It appears automatically as a featured showcase at the top of the portfolio.
+Copy one of the entries in `src/data/team.js`, put its screenshots in `public/portfolio/<name>/`, fill in
+the text in all three languages, give it a `slug` and a `challenge` (the problem it solves) and set `team`.
+It appears on the projects page automatically and gets its own project page.
+
+### Projects page (the portfolio)
+
+The home page has no portfolio section, so it stays the same length however many projects you add;
+"Portfolio" in the menu, "See our work" in the hero and the footer link open `/projects.html`.
+It lists every project on one page: a dark intro with an index of all projects, then one
+large row per project (screens, key figures, technology) linking to its own page, a type filter
+(`?type=mobile`) and a "Your project could be next" call to action. Code: `src/js/work-page.js`, styles: `src/styles/projects.css`.
+
+### Project pages
+
+`project.html?p=<slug>` (for example `/project.html?p=bibo-erp`) shows one project in full: the problem,
+the solution, what was built, all screenshots (click to open full size), results and a link to the next
+project. Everything comes from the project's entry in `src/data/team.js`; the page code is
+`src/js/case-page.js`. "View project" on each featured card links here, and "Start a similar project"
+fills in the contact form at the bottom of the page.
+
+## Service pages
+
+`/services/mobile-apps.html`, `/services/admin-panels.html` and `/services/telegram-bots.html`: one page per
+service, aimed at people searching for that service ("разработка мобильных приложений Ташкент" and the like).
+Each has a "starting from" price and timeline (taken from `src/data/pricing.js`, so it always matches the
+estimator), what the client gets, the process, related projects, an FAQ (also given to search engines as
+structured data) and links to the other services. Text in all three languages lives in `src/data/services.js`.
+Linked from the home page service cards ("Learn more") and the footer.
+
+To add a service: add an entry to `src/data/services.js`, copy one of the HTML files in `services/` (change
+`data-service`, title and description) and add it to the build inputs in `vite.config.js`.
+
+## Client reviews
+
+Only real reviews, added with the client's permission: put them in `src/data/reviews.js`. While the list is
+empty the section is hidden. Once there is a review it shows on the home page (between Infrastructure and
+FAQ), and on the project page when the review names a `project`. To see the design before you have a review,
+open any page with `?reviews=preview`: an example marked "Example · not a real review" appears, for you only.
+
+## Yandex Metrika (analytics)
+
+Off until you add a counter: create one at metrika.yandex.ru, put its number in `.env` as
+`VITE_YANDEX_METRIKA_ID=12345678` and rebuild. It records visits, traffic sources and a click map.
+Session recording (Webvisor) is left off, so what visitors type in the form is never recorded.
+These goals are sent; add them in Metrika as "JavaScript event" goals with the same names to see them in reports:
+
+| Goal | When |
+|---|---|
+| `estimate_used` | first choice in the cost estimator |
+| `estimate_quote` | "Get an exact quote" in the estimator |
+| `request_sent` | a contact request was sent |
+| `start_project` | "Start a project" on a service page or "Start a similar project" on a project page |
+| `telegram_click`, `phone_click` | a Telegram or phone link was clicked |
+
+## 404 page and hosting
+
+Unknown addresses show `404.html` (branded, translated, with links back). The preview/demo server does this
+already, and it also accepts addresses without `.html` (`/projects`). On the real hosting, set the 404 page:
+nginx `error_page 404 /404.html;`, Apache `.htaccess`: `ErrorDocument 404 /404.html`.
+
+## Performance
+
+- Screenshots and team photos have smaller copies for phones (`*-800w.webp`, `*-400w.webp`, `*-480w.webp`),
+  made by `npm run images` (also runs before every build). Add new images as usual; the copies are made for you.
+- Fonts load without blocking the first paint; images reserve their space, so nothing jumps while the page loads.
+- Mobile Lighthouse (slow phone simulation): about 80–95 performance, 96–97 accessibility, 100 best practices and SEO.
+
+## Cost estimator
+
+Section `#estimate` on the home page. Visitors pick what they need (app, website, admin panel, bot;
+platforms, website type, features, design) and see a price range in USD and so‘m plus a timeline.
+"Get an exact quote" ticks the matching services in the contact form and writes the selection into the message.
+
+**Prices are market starting points, not Afinity's real prices: review `src/data/pricing.js` before launch.**
+Every number (and the USD→so‘m rate) is in that one file; the calculation is in `src/js/estimate.js`.
+
+## Telegram button
+
+A floating "Write on Telegram" button (`@spame_r`) appears after the first screen. Markup is at the end
+of `partials/footer.html`; change the username there and in `partials/contact.html`.
 
 ## Brand system
 
@@ -157,8 +236,11 @@ It appears automatically as a featured showcase at the top of the portfolio.
 - [x] Real team in `src/data/team.js` (Ulug‘bek Xudoyqulov, Abdulloh Muxtorov, Temur Ibragimov)
 - [ ] Temur Ibragimov's role and skills (card shows "Afinity team" until then)
 - [ ] Email `hello@afinity.com`: in `partials/contact.html`, `partials/header.html`, `partials/footer.html` and `src/js/contact-form.js`
-- [ ] Social links in the footer (currently `#`)
+- [x] Social links in the footer (Instagram, GitHub)
 - [x] Phone `+998 93 577 04 88` and office address: in `partials/contact.html`, `partials/footer.html`, `partials/header.html` and the JSON-LD block in `index.html`
 - [x] Bibo ERP screenshots in `public/portfolio/bibo/` (see above)
 - [ ] Credit who built Bibo ERP, IRIZON BONUS and Elchi: add team ids to their `team: []` in `src/data/team.js`
+- [ ] Estimator prices and exchange rate in `src/data/pricing.js` (also shown as "starting from" on the service pages)
+- [ ] Yandex Metrika counter: `VITE_YANDEX_METRIKA_ID` in `.env`
+- [ ] First real client review in `src/data/reviews.js`
 - [ ] Contact form backend: set `VITE_CONTACT_ENDPOINT` (see `.env.example`)

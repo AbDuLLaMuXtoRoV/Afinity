@@ -34,8 +34,18 @@ export function initNav() {
   // Show the nav again when keyboard focus moves into it
   nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
 
-  // Highlight the link of the section in view
   const links = [...nav.querySelectorAll('.nav__links a')];
+
+  // On the projects pages "Portfolio" stays highlighted
+  if (/^\/projects?\.html$/.test(window.location.pathname)) {
+    const portfolio = links.find((a) => a.pathname === '/projects.html');
+    portfolio?.classList.add('is-active');
+    if (window.location.pathname === '/projects.html') portfolio?.setAttribute('aria-current', 'page');
+    initMenu(nav);
+    return;
+  }
+
+  // Highlight the link of the section in view
   const byId = new Map(links.map((a) => [a.hash.slice(1), a]));
   const observer = new IntersectionObserver(
     (entries) => {

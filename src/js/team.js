@@ -1,27 +1,29 @@
 import { firstName, initials, projectsBy, team } from '../data/team.js';
 import { html, safeUrl } from './html.js';
+import { photoSrcset } from './images.js';
 import { t, tr } from './i18n.js';
 
 /** Photo if the member has one, otherwise their initials. */
 export function avatarInner(member) {
   const photo = safeUrl(member.photo);
   return photo
-    ? html`<img class="avatar__img" src="${photo}" alt="" loading="lazy" decoding="async" />`
+    ? html`<img class="avatar__img" src="${photo}" srcset="${photoSrcset(photo)}" sizes="(max-width: 640px) 92vw, 30vw"
+        width="900" height="900" alt="" loading="lazy" decoding="async" />`
     : html`<span class="avatar__initials">${initials(member.name)}</span>`;
 }
 
-/** Link that filters the portfolio to one person (handled in portfolio.js). */
+/** Link to the projects page filtered to one person. */
 export function memberLink(member, { label = member.name, className = 'credit' } = {}) {
-  return html`<a class="${className}" href="?member=${member.id}#portfolio" data-show-member="${member.id}">
+  return html`<a class="${className}" href="/projects.html?member=${member.id}">
     <span class="credit__avatar" aria-hidden="true">${avatarInner(member)}</span>${label}
   </a>`;
 }
 
 export function memberCard(member, index = 0) {
   const count = projectsBy(member.id).length;
-  // With credited projects the card filters the portfolio; without any it opens the contact form for this person
+  // With credited projects the card opens their projects; without any it opens the contact form for this person
   const link = count
-    ? html`href="?member=${member.id}#portfolio" data-show-member="${member.id}"`
+    ? html`href="/projects.html?member=${member.id}"`
     : html`href="#contact" data-contact-member="${member.id}"`;
   return html`
     <a class="member" ${link} data-reveal style="--d: ${(index % 4) * 0.08}s">

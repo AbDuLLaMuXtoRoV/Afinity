@@ -1,4 +1,5 @@
 import { findMember, firstName, team } from '../data/team.js';
+import { goal } from './analytics.js';
 import { getLang, t, tr } from './i18n.js';
 import { validateContact } from './validation.js';
 
@@ -107,7 +108,25 @@ export function initContactForm() {
     try {
       const { website, ...payload } = data;
       const member = findMember(payload.member);
-      const result = await send({ ...payload, memberName: member?.name ?? '', language: getLang() });
+      // elapsed: time on the page before sending (bots send almost instantly)
+      const result = await send({
+        ...payload,
+        memberName: member?.name ?? '',
+        language: getLang(),
+        elapsed: Math.round(performance.now()),
+      });
+      if (result === 'spam') {
+        // Looks like junk: ask for a real description (the server counts these; 5 block the IP)
+        showErrors({ message: t('form.err.spam') });
+        setStatus('form.status.spam', 'error');
+        form.elements.message?.focus();
+        return;
+      }
+      if (result === 'blocked') {
+        setStatus('form.status.blocked', 'error');
+        return;
+      }
+      goal('request_sent', { via: result });
       resetForm();
       attempted = false;
       setStatus(result === 'mailto' ? 'form.status.mailto' : 'form.status.thanks', 'success');
@@ -145,6 +164,30 @@ export function presetMember(member) {
   }
 }
 
+/**
+ * Fills the contact form from the cost estimator: ticks the matching services, puts the summary
+ * in the message (keeping anything the visitor already wrote) and moves them to the form.
+ */
+export function prefillContact({ services = [], message = '' }) {
+  const form = document.querySelector('[data-form]');
+  if (!form) return;
+  for (const box of form.querySelectorAll('input[name="services"]')) {
+    if (services.includes(box.value)) box.checked = true;
+  }
+  const textarea = form.elements.message;
+  if (textarea) {
+    const own = textarea.value.trim();
+    textarea.value = own ? `${message}${own}` : message;
+  }
+  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Focus the first empty field once the scroll has settled
+  setTimeout(() => {
+    const target = ['name', 'email'].map((n) => form.elements[n]).find((el) => el && !el.value) ?? textarea;
+    target?.focus({ preventScroll: true });
+    if (target === textarea) textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+  }, 700);
+}
+
 /** Opens the visitor's email app with the request filled in. */
 function openMailto(payload) {
   const subject = payload.memberName
@@ -161,8 +204,9 @@ function openMailto(payload) {
 
 /**
  * Sends the request to the server (which forwards it to Telegram).
- * If that is not possible (no server, Telegram down, rate limit), the email app opens instead,
- * so a request is never lost.
+ * Returns 'sent', 'spam' (rejected as junk), 'blocked' (IP blocked) or 'mailto'.
+ * For temporary problems (no server, Telegram down, rate limit) the email app opens instead,
+ * so a real request is never lost. Spam and blocked IPs get no email fallback.
  */
 async function send(payload) {
   try {
@@ -173,6 +217,9 @@ async function send(payload) {
       signal: AbortSignal.timeout(15_000),
     });
     if (res.ok) return 'sent';
+    const body = await res.json().catch(() => ({}));
+    if (res.status === 403 && body.error === 'blocked') return 'blocked';
+    if (res.status === 422 && body.error === 'spam') return 'spam';
   } catch {
     /* network error or timeout: fall back below */
   }

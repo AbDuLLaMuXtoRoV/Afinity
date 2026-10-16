@@ -35,16 +35,17 @@
           "addressLocality": "Toshkent shahar, Yashnabod Tumani",
           "addressCountry": "UZ"
         },
-        "hasMap": "https://yandex.uz/maps/-/CTx~NAne"
+        "hasMap": "https://yandex.uz/maps/-/CTx~NAne",
+        "sameAs": ["https://www.instagram.com/ulugbek.xv/", "https://github.com/AbDuLLaMuXtoRoV"]
       }
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts load without blocking the first paint -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap" /></noscript>
 
     <script>
       (function () {
@@ -97,7 +98,7 @@
                 <span data-i18n="hero.cta">Start a project</span>
                 <svg class="i"><use href="#arrow" /></svg>
               </a>
-              <a class="btn btn--ghost" href="#portfolio">
+              <a class="btn btn--ghost" href="/projects.html">
                 <span data-i18n="hero.work">See our work</span>
               </a>
             </div>
@@ -205,6 +206,7 @@
                 <h3 class="card__title" data-i18n="svc.mobile.title">iOS &amp; Android apps</h3>
                 <p data-i18n="svc.mobile.text">Native and cross-platform apps that feel fast, look sharp and survive real-world traffic, from MVP to App Store &amp; Google Play release.</p>
                 <ul class="tags"><li>Swift</li><li>Kotlin</li><li>Flutter</li><li>React Native</li></ul>
+                <a class="link-arrow card__more" href="/services/mobile-apps.html"><span data-i18n="svcp.more">Learn more</span><svg class="i"><use href="#arrow" /></svg></a>
               </div>
             </article>
 
@@ -257,6 +259,7 @@
                 <h3 class="card__title" data-i18n="svc.admin.title">Admin panels</h3>
                 <p data-i18n="svc.admin.text">Dashboards and back-offices that give your team full control of users, orders, content and analytics, with role-based access.</p>
                 <ul class="tags"><li data-i18n="svc.admin.tag1">Dashboards</li><li data-i18n="svc.admin.tag2">Roles &amp; access</li><li data-i18n="svc.admin.tag3">Reports</li></ul>
+                <a class="link-arrow card__more" href="/services/admin-panels.html"><span data-i18n="svcp.more">Learn more</span><svg class="i"><use href="#arrow" /></svg></a>
               </div>
             </article>
 
@@ -327,29 +330,11 @@
         </div>
       </section>
 
-      <!-- ============ PORTFOLIO ============ -->
-      <section class="section section--light portfolio" id="portfolio">
-        <div class="container">
-          <header class="section-head section-head--row">
-            <div>
-              <p class="eyebrow eyebrow--num" data-reveal><span>04</span> <span data-i18n="portfolio.eyebrow">Portfolio</span></p>
-              <h2 class="section-title" data-reveal data-i18n-html="portfolio.title">Everything we’ve<br />shipped together.</h2>
-            </div>
-            <p class="section-lead portfolio__lead" data-reveal data-i18n="portfolio.lead">
-              Filter by type of work or by team member to see exactly who built what, then request the same
-              people for your next project.
-            </p>
-          </header>
-          <!-- Rendered from src/data/team.js -->
-          <div data-portfolio></div>
-        </div>
-      </section>
-
       <!-- ============ PROCESS ============ -->
       <section class="section section--light" id="process">
         <div class="container">
           <header class="section-head">
-            <p class="eyebrow eyebrow--num" data-reveal><span>05</span> <span data-i18n="process.eyebrow">Process</span></p>
+            <p class="eyebrow eyebrow--num" data-reveal><span>04</span> <span data-i18n="process.eyebrow">Process</span></p>
             <h2 class="section-title" data-reveal data-i18n-html="process.title">From idea to launch,<br />without the chaos.</h2>
             <p class="section-lead" data-reveal data-i18n="process.lead">
               A clear, repeatable path with weekly demos, so you always know where your project stands.
@@ -389,7 +374,7 @@
       <section class="section section--dark infra" id="infrastructure">
         <div class="container infra__inner">
           <div class="infra__copy">
-            <p class="eyebrow eyebrow--num" data-reveal><span>06</span> <span data-i18n="infra.eyebrow">Infrastructure</span></p>
+            <p class="eyebrow eyebrow--num" data-reveal><span>05</span> <span data-i18n="infra.eyebrow">Infrastructure</span></p>
             <h2 class="section-title" data-reveal data-i18n-html="infra.title">Your traffic,<br /><em>under control.</em></h2>
             <p class="section-lead" data-reveal data-i18n="infra.lead">
               We design, deploy and operate the data-centre side of your product, so a spike in users is a
@@ -431,11 +416,14 @@
         </div>
       </section>
 
+      <!-- Client reviews: src/data/reviews.js (hidden while the list is empty) -->
+      <div data-reviews></div>
+
       <!-- ============ FAQ ============ -->
       <section class="section section--light" id="faq">
         <div class="container faq">
           <header class="section-head">
-            <p class="eyebrow eyebrow--num" data-reveal><span>07</span> <span data-i18n="faq.eyebrow">FAQ</span></p>
+            <p class="eyebrow eyebrow--num" data-reveal><span>06</span> <span data-i18n="faq.eyebrow">FAQ</span></p>
             <h2 class="section-title" data-reveal data-i18n-html="faq.title">Questions,<br />answered.</h2>
           </header>
           <div class="faq__list">
@@ -460,6 +448,84 @@
               <div class="qa__body"><p data-i18n="faq.a5">Yes. We offer monthly support plans covering monitoring, bug fixes, updates, new features and 24/7 incident response.</p></div>
             </details>
           </div>
+        </div>
+      </section>
+
+      <!-- ============ COST ESTIMATE ============ -->
+      <!-- Prices: src/data/pricing.js -->
+      <section class="section section--dark estimate" id="estimate">
+        <div class="container">
+          <header class="section-head">
+            <p class="eyebrow eyebrow--num" data-reveal><span>07</span> <span data-i18n="est.eyebrow">Cost estimate</span></p>
+            <h2 class="section-title" data-reveal data-i18n-html="est.title">How much will<br />it cost?</h2>
+            <p class="section-lead" data-reveal data-i18n="est.lead">Pick what you need and get a rough price range and timeline in seconds.</p>
+          </header>
+
+          <form class="est" data-estimator novalidate>
+            <div class="est__questions">
+              <fieldset class="est__q" data-reveal>
+                <legend><span class="est__num mono">01</span><span data-i18n="est.q.products">What do you need?</span></legend>
+                <div class="chips">
+                  <label class="chip"><input type="checkbox" name="est-product" value="mobile" /><span data-i18n="form.chip.mobile">Mobile app</span></label>
+                  <label class="chip"><input type="checkbox" name="est-product" value="website" /><span data-i18n="form.chip.website">Website</span></label>
+                  <label class="chip"><input type="checkbox" name="est-product" value="admin" /><span data-i18n="form.chip.admin">Admin panel</span></label>
+                  <label class="chip"><input type="checkbox" name="est-product" value="bot" /><span data-i18n="form.chip.bot">Telegram bot</span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="est__q est__q--sub" data-when="mobile" hidden>
+                <legend><span class="est__num mono">↳</span><span data-i18n="est.q.platforms">Which platforms?</span></legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="est-platforms" value="ios" /><span data-i18n="est.platform.ios">iOS</span></label>
+                  <label class="chip"><input type="radio" name="est-platforms" value="android" /><span data-i18n="est.platform.android">Android</span></label>
+                  <label class="chip"><input type="radio" name="est-platforms" value="both" checked /><span data-i18n="est.platform.both">iOS + Android</span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="est__q est__q--sub" data-when="website" hidden>
+                <legend><span class="est__num mono">↳</span><span data-i18n="est.q.website">What kind of website?</span></legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="est-website" value="landing" /><span data-i18n="est.web.landing">Landing page</span></label>
+                  <label class="chip"><input type="radio" name="est-website" value="corporate" checked /><span data-i18n="est.web.corporate">Corporate website</span></label>
+                  <label class="chip"><input type="radio" name="est-website" value="shop" /><span data-i18n="est.web.shop">Online store</span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="est__q" data-reveal>
+                <legend><span class="est__num mono">02</span><span data-i18n="est.q.features">Features</span></legend>
+                <div class="chips">
+                  <label class="chip"><input type="checkbox" name="est-feature" value="accounts" /><span data-i18n="est.f.accounts">User accounts &amp; login</span></label>
+                  <label class="chip"><input type="checkbox" name="est-feature" value="payments" /><span data-i18n="est.f.payments">Online payments (Payme, Click)</span></label>
+                  <label class="chip"><input type="checkbox" name="est-feature" value="maps" /><span data-i18n="est.f.maps">Maps &amp; GPS</span></label>
+                  <label class="chip"><input type="checkbox" name="est-feature" value="languages" /><span data-i18n="est.f.languages">Several languages</span></label>
+                  <label class="chip"><input type="checkbox" name="est-feature" value="integrations" /><span data-i18n="est.f.integrations">Integrations (1C, CRM, API)</span></label>
+                  <label class="chip"><input type="checkbox" name="est-feature" value="notifications" /><span data-i18n="est.f.notifications">Push notifications</span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="est__q" data-reveal>
+                <legend><span class="est__num mono">03</span><span data-i18n="est.q.design">Design</span></legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="est-design" value="ready" /><span data-i18n="est.design.ready">We have a design</span></label>
+                  <label class="chip"><input type="radio" name="est-design" value="custom" checked /><span data-i18n="est.design.custom">Design it for us</span></label>
+                </div>
+              </fieldset>
+            </div>
+
+            <aside class="est__result" data-reveal style="--d: 0.1s">
+              <p class="est__label mono" data-i18n="est.result">Rough estimate</p>
+              <div class="est__live" aria-live="polite">
+                <p class="est__price" data-est-price>—</p>
+                <p class="est__som mono" data-est-som></p>
+                <p class="est__time"><span data-i18n="est.timeline">Timeline</span> <strong data-est-time>—</strong></p>
+                <p class="est__empty" data-est-empty data-i18n="est.empty">Pick what you need to see an estimate.</p>
+              </div>
+              <button class="btn btn--dark est__cta" type="button" data-est-cta disabled>
+                <span data-i18n="est.cta">Get an exact quote</span><svg class="i"><use href="#arrow" /></svg>
+              </button>
+              <p class="est__note" data-i18n="est.note">A rough range for planning. The exact price comes after a short call about your project.</p>
+            </aside>
+          </form>
         </div>
       </section>
 

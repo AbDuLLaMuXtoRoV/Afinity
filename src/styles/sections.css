@@ -667,7 +667,7 @@
   gap: 11px;
 }
 
-.footer__col h4 {
+.footer__heading {
   margin-bottom: 6px;
   color: var(--muted-on-dark);
   font-family: var(--font-mono);
@@ -899,4 +899,349 @@
 .menu__foot a {
   color: var(--ink);
   text-decoration: none;
+}
+
+/* ============ FLOATING TELEGRAM BUTTON ============ */
+.tg-float {
+  position: fixed;
+  right: clamp(16px, 2.5vw, 28px);
+  bottom: clamp(16px, 2.5vw, 28px);
+  z-index: 40; /* under the nav and the mobile menu */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 18px 6px 6px;
+  border: 1px solid rgba(236, 242, 233, 0.12);
+  border-radius: 999px;
+  background: rgba(16, 22, 17, 0.92);
+  color: var(--text-on-dark);
+  font: 600 0.92rem/1 var(--font-body);
+  text-decoration: none;
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  transition:
+    opacity 0.4s,
+    transform 0.5s var(--ease-out),
+    background 0.3s;
+}
+
+.tg-float.is-shown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.tg-float:hover {
+  background: var(--ink-3);
+}
+
+.tg-float:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* Telegram's own blue, so the button is recognised at a glance */
+.tg-float__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #229ed9;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.tg-float__icon svg {
+  width: 20px;
+  height: 20px;
+  margin-left: -2px;
+  fill: #fff;
+}
+
+.tg-float:hover .tg-float__icon {
+  transform: rotate(-12deg) scale(1.06);
+}
+
+html.menu-open .tg-float {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .tg-float {
+    padding: 6px;
+  }
+
+  .tg-float__label {
+    display: none;
+  }
+
+  .tg-float__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .tg-float__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* ---------- Cost estimator ---------- */
+.est {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.est__questions {
+  display: grid;
+  gap: clamp(28px, 3.5vw, 40px);
+}
+
+.est__q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.est__q legend {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding: 0;
+  font: 700 clamp(1.1rem, 1.6vw, 1.35rem)/1.2 var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.est__num {
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+/* Follow-up question (platforms, website type): indented under the products */
+.est__q--sub {
+  padding-left: 18px;
+  border-left: 2px solid var(--green);
+  animation: est-in 0.35s var(--ease-out);
+}
+
+.est__q--sub legend {
+  font-size: 1rem;
+}
+
+@keyframes est-in {
+  from {
+    opacity: 0;
+    translate: 0 -6px;
+  }
+}
+
+.est__result {
+  --cut: 22px;
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 18px;
+  padding: clamp(26px, 3vw, 38px);
+  background: var(--green);
+  color: var(--ink);
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+}
+
+.est__label {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.est__live {
+  display: grid;
+  gap: 10px;
+}
+
+.est__live p {
+  margin: 0;
+}
+
+.est__price {
+  font: 800 clamp(1.7rem, 3vw, 2.5rem)/1.05 var(--font-display);
+  font-stretch: 110%;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.est__som {
+  font-size: 0.86rem;
+  opacity: 0.75;
+}
+
+.est__som:empty {
+  display: none;
+}
+
+.est__time {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(10, 14, 11, 0.2);
+  font-size: 0.95rem;
+}
+
+.est__empty {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.est__result.is-empty .est__price,
+.est__result.is-empty .est__time {
+  opacity: 0.45;
+}
+
+.est__cta {
+  justify-content: center;
+}
+
+.est__cta:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.est__note {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+@media (max-width: 959px) {
+  .est {
+    grid-template-columns: 1fr;
+  }
+
+  .est__result {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .est__q--sub {
+    animation: none;
+  }
+}
+
+.est__cta:disabled::before {
+  display: none;
+}
+
+/* ---------- Client reviews ---------- */
+.reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.reviews__grid--one {
+  grid-template-columns: minmax(0, 960px);
+}
+
+.review {
+  --cut: 22px;
+  position: relative;
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: clamp(28px, 4vw, 52px);
+  background: var(--white);
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+}
+
+.review__example {
+  justify-self: start;
+  padding: 6px 10px;
+  background: #ffe9a8;
+  color: #6b4e00;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.review__mark {
+  width: 48px;
+  height: 36px;
+  fill: var(--green);
+}
+
+.review__quote {
+  margin: 0;
+}
+
+.review__quote p {
+  margin: 0;
+  font: 600 clamp(1.2rem, 2vw, 1.6rem)/1.4 var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+.review__who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 16px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.review__who strong {
+  display: block;
+}
+
+.review__who .mono {
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+.review__avatar {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  width: 48px;
+  height: 48px;
+  background: var(--ink);
+  color: var(--green);
+  font: 700 0.95rem/1 var(--font-display);
+}
+
+.review__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.review__project {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: var(--green-deep);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.review__project:hover {
+  text-decoration: underline;
+}
+
+.reviews--case .eyebrow {
+  margin-bottom: 1.4rem;
 }

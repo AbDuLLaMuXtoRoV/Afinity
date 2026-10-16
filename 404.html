@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" class="no-js intro-seen">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found — Afinity</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0A0E0B" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts load without blocking the first paint -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600..900&display=swap" /></noscript>
+
+    <script>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+    <script type="module" src="/src/not-found.js"></script>
+  </head>
+
+  <body>
+    <!-- @include sprite.html -->
+
+    <!-- @include header.html -->
+
+    <main id="main" class="nf">
+      <svg class="nf__mark" aria-hidden="true"><use href="#mark" /></svg>
+      <div class="container nf__inner">
+        <p class="nf__code" aria-hidden="true">4<span>0</span>4</p>
+        <h1 class="nf__title" data-i18n="nf.title">This page went missing.</h1>
+        <p class="nf__text" data-i18n="nf.text">The link may be old or mistyped. Here is where you can go instead:</p>
+        <nav class="nf__links">
+          <a class="btn btn--primary" href="/"><span data-i18n="nf.home">Home page</span><svg class="i"><use href="#arrow" /></svg></a>
+          <a class="btn btn--ghost" href="/projects.html"><span data-i18n="nav.portfolio">Portfolio</span></a>
+          <a class="btn btn--ghost" href="/#estimate"><span data-i18n="nav.estimate">Cost estimate</span></a>
+          <a class="btn btn--ghost" href="https://t.me/spame_r" target="_blank" rel="noopener noreferrer"><span data-i18n="tg.cta">Write on Telegram</span></a>
+        </nav>
+      </div>
+    </main>
+
+    <!-- @include footer.html -->
+  </body>
+</html>

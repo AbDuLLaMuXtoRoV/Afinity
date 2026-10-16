@@ -9,3 +9,6 @@ demo/logs/
 demo/pids.txt
 demo/demo_url.txt
 demo/cloudflared.exe
+
+# Blocked spammer IPs (personal data)
+/data/

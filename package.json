@@ -5,11 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/thumbnails.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "telegram:chat-id": "node scripts/telegram-chat-id.mjs"
+    "telegram:chat-id": "node scripts/telegram-chat-id.mjs",
+    "spam": "node scripts/spam.mjs",
+    "images": "node scripts/thumbnails.mjs"
   },
   "devDependencies": {
+    "sharp": "^0.33.5",
     "vite": "^6.4.4"
   }
 }

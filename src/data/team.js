@@ -93,6 +93,13 @@ export const projects = [
   {
     featured: true,
     title: 'Bibo ERP',
+    slug: 'bibo-erp', // project page: /project.html?p=bibo-erp
+    // The problem the project solves (shown on its project page)
+    challenge: {
+      en: 'Private kindergartens ran on spreadsheets, paper attendance journals and scattered chats with parents. Directors could not see who had paid, how many places were free or whether a group was profitable without hours of manual counting, and payment reminders depended on someone remembering to send them.',
+      ru: 'Частные детские сады работали на таблицах, бумажных журналах посещаемости и разрозненных чатах с родителями. Руководитель не мог увидеть, кто оплатил, сколько мест свободно и окупается ли группа, без многочасовых ручных подсчётов, а напоминания об оплате зависели от того, вспомнит ли кто-то их отправить.',
+      uz: 'Xususiy bog‘chalar jadvallar, qog‘oz davomat jurnallari va ota-onalar bilan tarqoq chatlar orqali ishlardi. Rahbar kim to‘lagani, nechta o‘rin bo‘shligi yoki guruh foyda keltirayotganini soatlab qo‘lda hisoblamasdan bila olmasdi, to‘lov eslatmalari esa kimdir yuborishni eslab qolishiga bog‘liq edi.',
+    },
     tagline: { en: 'ERP for private kindergartens', ru: 'ERP для частных детских садов', uz: 'Xususiy bog‘chalar uchun ERP' },
     year: 2026,
     category: 'admin',
@@ -194,6 +201,13 @@ export const projects = [
   {
     featured: true,
     title: 'IRIZON BONUS',
+    slug: 'irizon-bonus', // project page: /project.html?p=irizon-bonus
+    // The problem the project solves (shown on its project page)
+    challenge: {
+      en: 'IRIZON wanted to reward the people who buy and install its parts, but a paper or manual bonus scheme is easy to abuse: codes get reused, points are hard to verify and nobody sees the full picture. The programme had to be digital, fraud-proof and transparent for both buyers and IRIZON staff.',
+      ru: 'IRIZON хотел поощрять тех, кто покупает и устанавливает его запчасти, но бумажную или ручную бонусную схему легко обмануть: коды используются повторно, баллы сложно проверить, а полной картины не видит никто. Программа должна была стать цифровой, защищённой от мошенничества и прозрачной и для покупателей, и для сотрудников IRIZON.',
+      uz: 'IRIZON o‘z ehtiyot qismlarini sotib oladigan va o‘rnatadigan odamlarni rag‘batlantirmoqchi edi, ammo qog‘oz yoki qo‘lda yuritiladigan bonus tizimini aldash oson: kodlar qayta ishlatiladi, ballarni tekshirish qiyin va to‘liq manzarani hech kim ko‘rmaydi. Dastur raqamli, firibgarlikdan himoyalangan va xaridorlar uchun ham, IRIZON xodimlari uchun ham shaffof bo‘lishi kerak edi.',
+    },
     tagline: {
       en: 'QR loyalty programme for auto parts buyers',
       ru: 'Программа лояльности с QR-кодами для покупателей автозапчастей',
@@ -324,6 +338,13 @@ export const projects = [
   {
     featured: true,
     title: 'Elchi',
+    slug: 'elchi', // project page: /project.html?p=elchi
+    // The problem the project solves (shown on its project page)
+    challenge: {
+      en: 'Sending a parcel or finding a ride to another region usually means going to a taxi stand or posting in a Telegram group. It is fast and cheap, but there is no driver verification, no tracking and nobody to turn to when something goes wrong.',
+      ru: 'Чтобы отправить посылку или уехать в другой регион, обычно идут на стоянку такси или пишут в Telegram-группу. Это быстро и недорого, но водителей никто не проверяет, отследить поездку нельзя, и обратиться, если что-то пошло не так, не к кому.',
+      uz: 'Posilka yuborish yoki boshqa viloyatga yo‘l topish uchun odatda taksi bekatiga borishadi yoki Telegram guruhiga yozishadi. Bu tez va arzon, lekin haydovchilar tekshirilmaydi, safarni kuzatib bo‘lmaydi va biror muammo bo‘lsa, murojaat qiladigan joy yo‘q.',
+    },
     tagline: {
       en: 'Intercity parcels and rides, priced by agreement',
       ru: 'Посылки и поездки между городами по договорной цене',
@@ -448,6 +469,7 @@ export const projects = [
   },
 ];
 
+export const findProject = (slug) => projects.find((p) => p.slug && p.slug === slug) ?? null;
 export const findMember = (id) => team.find((m) => m.id === id) ?? null;
 
 export const projectsBy = (memberId) => projects.filter((p) => p.team.includes(memberId));

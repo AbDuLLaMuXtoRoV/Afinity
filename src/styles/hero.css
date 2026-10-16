@@ -28,12 +28,13 @@
 .hero__bg::after {
   content: '';
   position: absolute;
-  top: -20%;
-  bottom: -20%;
+  /* Anchored at the top and stretched with a transform: when the hero's height changes (fonts loading)
+     the beam does not move, so the browser does not count it as a layout shift */
+  inset-block: 0;
   left: 58%;
   width: 22%;
   background: linear-gradient(90deg, transparent, rgba(91, 177, 78, 0.07), transparent);
-  transform: skewX(var(--slant));
+  transform: skewX(var(--slant)) scaleY(1.4);
 }
 
 .hero__inner {
